@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPTV Player with Channel Logos</title>
+<style>
+    #channelButtons {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+    }
+    .channelButton {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .channelLogo {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<video id="iptvPlayer" controls width="640" height="360">
+  Your browser does not support the video tag.
+</video>
+
+<div id="channelButtons"></div>
+
+<script>
+  const iptvPlayer = document.getElementById('iptvPlayer');
+  const channelButtonsContainer = document.getElementById('channelButtons');
+
+  // Fetch the JSON file containing IPTV channels and logos
+  fetch('channel.json')
+    .then(response => response.json())
+    .then(channels => createChannelButtons(channels))
+    .catch(error => console.error('Error loading channels:', error));
+
+  function createChannelButtons(channels) {
+    channels.forEach(channel => {
+      const channelButton = document.createElement('button');
+      channelButton.classList.add('channelButton');
+      channelButton.textContent = channel.name || 'Unknown Channel';
+      channelButton.addEventListener('click', () => changeChannel(channel.url));
+
+      const channelLogo = document.createElement('img');
+      channelLogo.classList.add('channelLogo');
+      channelLogo.src = channel.logo || 'path/to/default/logo.png'; // Provide a default logo path
+
+      channelButton.appendChild(channelLogo);
+      channelButtonsContainer.appendChild(channelButton);
+    });
+
+    // Set the default channel
+    changeChannel(channels[0].url);
+  }
+
+  // Function to change the channel
+  function changeChannel(url) {
+    iptvPlayer.src = url;
+    iptvPlayer.load(); // Reload the player with the new source
+    iptvPlayer.play(); // Start playing the new channel
+  }
+</script>
+
+</body>
+</html>
