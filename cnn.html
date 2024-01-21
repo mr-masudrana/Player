@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
+   <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
+</head>
+<video id='live-video' class='video-js vjs-default-skin vjs-live vjs-liveui' width='320' height='180' controls muted>
+</video>
+   <div>
+      <a href="aje.html" class="btn">Al Jazeera</a><br>
+      <a href="bbc.html" class="btn">BBC Nesw</a><br>
+      <a href="dw.html" class="btn">WD News</a>
+   </div>
+<script>
+   var  player = videojs('live-video', {liveui: true} );
+   player.src({ src:'https://d30x5vsa85tvmd.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-7y561g9sa9uht/index.m3u8', type:'application/x-mpegurl'});
+   player.play();
+</script>
+</body>
+</html>
